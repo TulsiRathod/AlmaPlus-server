@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').process.env();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");

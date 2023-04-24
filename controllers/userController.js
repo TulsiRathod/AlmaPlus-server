@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const bcryptjs = require("bcryptjs");
-const config = require("../config/config");
+// const process.env = require("../process.env/process.env");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
@@ -15,13 +15,13 @@ const sendresetpasswordMail = async (name, email, token) => {
             secure: false,
             requireTLS: true,
             auth: {
-                user: config.emailUser,
-                pass: config.emailPassword
+                user: process.env.emailUser,
+                pass: process.env.emailPassword
             }
         });
 
         const mailoptions = {
-            from: config.emailUser,
+            from: process.env.emailUser,
             to: email,
             subject: 'For Reset Password',
             // html: '<p>Hello ' + name + ', Please copy the link and <a href="localhost:5000/api/userResetPassword?token=' + token + '" style="color:blue"> reset your password</a></p>'
@@ -46,7 +46,7 @@ const sendresetpasswordMail = async (name, email, token) => {
 //method for generate jwt token
 const createtoken = async (id) => {
     try {
-        const token = jwt.sign({ _id: id }, config.secret_jwt);
+        const token = jwt.sign({ _id: id }, process.env.secret_jwt);
         return token;
     } catch (error) {
         res.status(400).send(error.message);
@@ -139,7 +139,6 @@ const userlogin = async (req, res) => {
             const passwordMatch = await bcryptjs.compare(password, userData.password);
 
             if (passwordMatch) {
-
                 // //method2
                 // const token = await userData.createtoken();
                 // console.log("token part : " + token);
@@ -178,7 +177,7 @@ const userlogin = async (req, res) => {
                     designation: userData.designation,
                     experience: userData.experience,
                     role: userData.role,
-                    // token: tokenData
+                    token: tokenData
                 }
 
                 const response = {

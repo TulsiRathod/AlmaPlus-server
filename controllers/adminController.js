@@ -1,6 +1,6 @@
 const Admin = require("../models/adminModel");
 const bcryptjs = require("bcryptjs");
-const config = require("../config/config");
+// const process.env = require("../process.env/process.env");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
@@ -15,13 +15,13 @@ const sendresetpasswordMail = async (name, email, token) => {
             secure: false,
             requireTLS: true,
             auth: {
-                user: config.emailUser,
-                pass: config.emailPassword
+                user: proccess.env.emailUser,
+                pass: process.env.emailPassword
             }
         });
 
         const mailoptions = {
-            from: config.emailUser,
+            from: process.env.emailUser,
             to: email,
             subject: 'For Reset Password',
             // html: '<p>Hello ' + name + ', Please copy the link and <a href="localhost:5000/api/userResetPassword?token=' + token + '" style="color:blue"> reset your password</a></p>'
@@ -46,7 +46,7 @@ const sendresetpasswordMail = async (name, email, token) => {
 //method for generate jwt token
 const createtoken = async (id) => {
     try {
-        const token = jwt.sign({ _id: id }, config.secret_jwt);
+        const token = jwt.sign({ _id: id }, process.env.secret_jwt);
         return token;
     } catch (error) {
         res.status(400).send(error.message);
@@ -137,7 +137,7 @@ const adminlogin = async (req, res) => {
 
                 //method1
                 const tokenData = await createtoken(adminData._id);
-                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 1 * 60 * 60 * 1000) });
+                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
 
                 const adminResult = {
                     _id: adminData._id,
