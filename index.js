@@ -23,6 +23,9 @@ app.use('/api', institute_route);
 app.use('/api', course_route);
 app.use('/api', post_route);
 app.use('/api', admin_route);
+app.use("/", (req, res) => {
+    res.end("Helloooo");
+})
 
 app.listen(port, function () {
     console.log("Server is ready");
