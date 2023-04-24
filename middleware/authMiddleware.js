@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-// const process.env = require("../process.env/process.env");
+const config = require("../config/config");
 
 const requireAuth = (req, res, next) => {
 
@@ -7,7 +7,7 @@ const requireAuth = (req, res, next) => {
     //check jwt exists & its verified
 
     if (token) {
-        jwt.verify(token, process.env.secret_jwt, (err, decodedToken) => {
+        jwt.verify(token, config.secret_jwt, (err, decodedToken) => {
             if (err) {
                 console.log("error in verify token(login first) : " + err.message);
                 res.status(400).send({ success: false, msg: "Login First" });

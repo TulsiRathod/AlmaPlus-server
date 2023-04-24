@@ -1,4 +1,4 @@
-// require('dotenv').process.env();
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -24,7 +24,7 @@ app.use('/api', course_route);
 app.use('/api', post_route);
 app.use('/api', admin_route);
 app.use("/", (req, res) => {
-    res.end("Helloooo");
+    res.end("Hellooo");
 })
 
 app.listen(port, function () {
