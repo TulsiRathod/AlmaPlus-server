@@ -73,7 +73,7 @@ const registerInstitute = async (req, res) => {
             email: req.body.email,
             password: spassword,
             website: req.body.website,
-            image: req.file.filename,
+            image: '/instituteImages/' + req.file.filename,
             active: req.body.active
         });
         const instituteData = await Institute.findOne({ email: req.body.email });
@@ -227,7 +227,7 @@ const updateInstitute = async (req, res) => {
             var phone = req.body.phone;
             var email = req.body.email;
             var website = req.body.website;
-            var image = req.file.filename;
+            var image = 'instituteImages/' + req.file.filename;
             var active = req.body.active
 
             const institute_data = await Institute.findByIdAndUpdate({ _id: id }, { $set: { name: name, address: address, phone: phone, email: email, website: website, image: image, active: active } }, { new: true });
@@ -240,7 +240,7 @@ const updateInstitute = async (req, res) => {
             var phone = req.body.phone;
             var email = req.body.email;
             var website = req.body.website;
-            var active = req.body.active
+            var active = '/instituteImages/' + req.body.active
 
             const institute_data = await Institute.findByIdAndUpdate({ _id: id }, { $set: { name: name, address: address, phone: phone, email: email, website: website, active: active } }, { new: true });
             res.status(200).send({ success: true, msg: 'Institute Updated', data: institute_data });

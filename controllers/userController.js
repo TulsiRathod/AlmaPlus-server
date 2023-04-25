@@ -77,7 +77,7 @@ const registerUser = async (req, res) => {
             nationality: req.body.nationality,
             dob: req.body.dob,
             address: req.body.address,
-            profilepic: req.file.filename,
+            profilepic: '/userImages/' + req.file.filename,
             phone: req.body.phone,
             email: req.body.email,
             password: spassword,
@@ -294,7 +294,7 @@ const userProfileEdit = async (req, res) => {
             var nationality = req.body.nationality;
             var dob = req.body.dob;
             var address = req.body.address;
-            var profilepic = req.file.filename;
+            var profilepic = '/userImages/' + req.file.filename;
             var phone = req.body.phone;
             var email = req.body.email;
             // var password = spassword;

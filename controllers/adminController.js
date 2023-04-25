@@ -76,7 +76,7 @@ const registerAdmin = async (req, res) => {
             phone: req.body.phone,
             email: req.body.email,
             password: spassword,
-            profilepic: req.file.filename,
+            profilepic: '/adminImages/' + req.file.filename,
         });
 
         const adminData = await Admin.findOne({ email: req.body.email });
@@ -264,11 +264,46 @@ const adminLogout = async (req, res) => {
     }
 }
 
+//admin profile edit and update
+const adminProfileEdit = async (req, res) => {
+    try {
+        if (req.file !== undefined) {
+            var id = req.body.id;
+            var fname = req.body.fname;
+            var lname = req.body.lname;
+            var phone = req.body.phone;
+            var email = req.body.email;
+            // var password = spassword;
+            var profilepic = '/adminImages/' + req.file.filename;
+
+            await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email, profilepic: profilepic } });
+
+            res.status(200).send({ success: true, msg: 'Admin Updated' });
+        }
+        else {
+            var id = req.body.id;
+            var fname = req.body.fname;
+            var lname = req.body.lname;
+            var phone = req.body.phone;
+            var email = req.body.email;
+            // var password = spassword;
+            // var profilepic = '/adminImages/' + req.file.filename;
+
+            await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email } });
+
+            res.status(200).send({ success: true, msg: 'Admin Updated' });
+        }
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 module.exports = {
     registerAdmin,
     adminlogin,
     forgetPassword,
     resetpassword,
     updatePassword,
-    adminLogout
+    adminLogout,
+    adminProfileEdit
 }

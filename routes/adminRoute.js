@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
     }
 });
 
+
 const upload = multer({ storage: storage });
 
 const admin_controller = require("../controllers/adminController");
@@ -38,6 +39,7 @@ admin_route.post('/updatepassword', admin_controller.updatePassword);
 admin_route.post('/forgetpassword', admin_controller.forgetPassword);
 admin_route.get('/resetpassword', admin_controller.resetpassword);
 admin_route.get('/adminLogout', admin_controller.adminLogout);
+admin_route.post('/adminProfileEdit', admin_controller.adminProfileEdit);
 
 module.exports = admin_route;
 
