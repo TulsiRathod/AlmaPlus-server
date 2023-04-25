@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const connectToMongo = require("./db/conn");
 const cookieParser = require("cookie-parser");
 const port = 5000;
+const cors = require('cors');
 
 connectToMongo();
 
@@ -16,6 +17,7 @@ const course_route = require("./routes/courseRoute");
 const post_route = require('./routes/postRoute');
 const admin_route = require('./routes/adminRoute');
 
+app.use(cors());
 app.use(cookieParser());
 app.use('/api', user_route);
 app.use('/api', event_route);
