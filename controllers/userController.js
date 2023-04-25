@@ -139,7 +139,6 @@ const userlogin = async (req, res) => {
             const passwordMatch = await bcryptjs.compare(password, userData.password);
 
             if (passwordMatch) {
-
                 // //method2
                 // const token = await userData.createtoken();
                 // console.log("token part : " + token);
@@ -178,7 +177,7 @@ const userlogin = async (req, res) => {
                     designation: userData.designation,
                     experience: userData.experience,
                     role: userData.role,
-                    // token: tokenData
+                    token: tokenData
                 }
 
                 const response = {
@@ -348,6 +347,16 @@ const userProfileEdit = async (req, res) => {
     }
 }
 
+//view users
+const getUsers = async (req, res) => {
+    try {
+        const user_data = await User.find({});
+        res.status(200).send({ success: true, data: user_data });
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 //search user
 const searchUser = async (req, res) => {
     try {
@@ -385,5 +394,6 @@ module.exports = {
     resetpassword,
     userProfileEdit,
     searchUser,
-    userLogout
+    userLogout,
+    getUsers
 }

@@ -137,7 +137,7 @@ const adminlogin = async (req, res) => {
 
                 //method1
                 const tokenData = await createtoken(adminData._id);
-                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 1 * 60 * 60 * 1000) });
+                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
 
                 const adminResult = {
                     _id: adminData._id,
