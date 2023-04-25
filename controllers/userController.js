@@ -347,6 +347,16 @@ const userProfileEdit = async (req, res) => {
     }
 }
 
+//view users
+const getUsers = async (req, res) => {
+    try {
+        const user_data = await User.find({});
+        res.status(200).send({ success: true, data: user_data });
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 //search user
 const searchUser = async (req, res) => {
     try {
@@ -384,5 +394,6 @@ module.exports = {
     resetpassword,
     userProfileEdit,
     searchUser,
-    userLogout
+    userLogout,
+    getUsers
 }

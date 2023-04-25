@@ -92,10 +92,6 @@ const user = new mongoose.Schema({
         type: String,
         required: true
     },
-    is_varified: {
-        type: Number,
-        default: 0
-    },
     token: {
         type: String,
         default: ''
