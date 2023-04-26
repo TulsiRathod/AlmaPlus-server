@@ -19,7 +19,7 @@ const addCourse = async (req, res) => {
 }
 
 
-//view courses
+//view Events
 const getCourse = async (req, res) => {
     try {
         const course_data = await Course.find({});
@@ -29,7 +29,7 @@ const getCourse = async (req, res) => {
     }
 }
 
-//delete courses
+//delete event
 const deleteCourse = async (req, res) => {
     try {
         const id = req.params.id;

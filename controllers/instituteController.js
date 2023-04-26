@@ -73,7 +73,7 @@ const registerInstitute = async (req, res) => {
             email: req.body.email,
             password: spassword,
             website: req.body.website,
-            image: '/instituteImages/' + req.file.filename,
+            image: req.body.image,
             active: req.body.active
         });
         const instituteData = await Institute.findOne({ email: req.body.email });
@@ -89,6 +89,22 @@ const registerInstitute = async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message);
         console.log("Error in Register Institute : " + error.message);
+    }
+}
+//image upload
+const uploadInstituteImage = async (req, res) => {
+    try {
+        if (req.file !== undefined) {
+            const picture = ({
+                url: '/instituteImages/' + req.file.filename,
+            });
+            res.status(200).send({ success: true, data: picture });
+        }
+        else {
+            res.status(200).send({ success: false, msg: "plz select a file" });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 }
 
@@ -220,31 +236,19 @@ const instituteResetPassword = async (req, res) => {
 //institute  edit and update
 const updateInstitute = async (req, res) => {
     try {
-        if (req.file !== undefined) {
-            var id = req.body.id;
-            var name = req.body.name;
-            var address = req.body.address;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            var website = req.body.website;
-            var image = 'instituteImages/' + req.file.filename;
-            var active = req.body.active
 
-            const institute_data = await Institute.findByIdAndUpdate({ _id: id }, { $set: { name: name, address: address, phone: phone, email: email, website: website, image: image, active: active } }, { new: true });
-            res.status(200).send({ success: true, msg: 'Institute Updated', data: institute_data });
-        }
-        else {
-            var id = req.body.id;
-            var name = req.body.name;
-            var address = req.body.address;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            var website = req.body.website;
-            var active = '/instituteImages/' + req.body.active
+        var id = req.body.id;
+        var name = req.body.name;
+        var address = req.body.address;
+        var phone = req.body.phone;
+        var email = req.body.email;
+        var website = req.body.website;
+        var image = req.body.image;
+        var active = req.body.active
 
-            const institute_data = await Institute.findByIdAndUpdate({ _id: id }, { $set: { name: name, address: address, phone: phone, email: email, website: website, active: active } }, { new: true });
-            res.status(200).send({ success: true, msg: 'Institute Updated', data: institute_data });
-        }
+        const institute_data = await Institute.findByIdAndUpdate({ _id: id }, { $set: { name: name, address: address, phone: phone, email: email, website: website, image: image, active: active } }, { new: true });
+        res.status(200).send({ success: true, msg: 'Institute Updated', data: institute_data });
+
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
@@ -297,5 +301,6 @@ module.exports = {
     updateInstitute,
     deleteInstitute,
     getInstitues,
-    searchInstitute
+    searchInstitute,
+    uploadInstituteImage
 }

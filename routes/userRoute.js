@@ -31,17 +31,24 @@ const upload = multer({ storage: storage });
 const user_controller = require("../controllers/userController");
 
 //user routes
-user_route.post('/registerUser', upload.single('profilepic'), user_controller.registerUser);
-
+user_route.post('/register', user_controller.registerUser);
 user_route.post('/userLogin', user_controller.userlogin);
 user_route.post('/userUpdatePassword', user_controller.updatePassword);
 user_route.post('/userForgetPassword', user_controller.forgetPassword);
 user_route.get('/userResetPassword', user_controller.resetpassword);
-user_route.post('/userProfileEdit', upload.single('profilepic'), user_controller.userProfileEdit);
-user_route.get('/getUsers', user_controller.getUsers);
+user_route.post('/userProfileEdit', user_controller.userProfileEdit);
 user_route.get('/searchUser', user_controller.searchUser);
 user_route.get('/userLogout', user_controller.userLogout);
 
+user_route.post('/uploadUserImage', upload.single('profilepic'), user_controller.uploadUserImage);
+
+
+// user_route.post("/uploadUserImage", upload.single('profilepic'), (req, res) => {
+//     res.send({
+//         success: true,
+//         profilepic: `${req.file.filename}`
+//     })
+// })
 
 module.exports = user_route;
 

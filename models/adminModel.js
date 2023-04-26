@@ -4,6 +4,7 @@ const admin = new mongoose.Schema({
     fname:
     {
         type: String,
+
     },
     lname: {
         type: String,
@@ -24,10 +25,6 @@ const admin = new mongoose.Schema({
     profilepic: {
         type: String,
 
-    },
-    is_varified: {
-        type: Number,
-        default: 0
     },
     token: {
         type: String,

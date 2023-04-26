@@ -76,7 +76,7 @@ const registerAdmin = async (req, res) => {
             phone: req.body.phone,
             email: req.body.email,
             password: spassword,
-            profilepic: '/adminImages/' + req.file.filename,
+            profilepic: req.body.profilepic,
         });
 
         const adminData = await Admin.findOne({ email: req.body.email });
@@ -85,15 +85,6 @@ const registerAdmin = async (req, res) => {
             res.status(400).send({ success: false, msg: "Admin already exists" });
         }
         else {
-            // //method2
-            // const token = await user.createtoken();
-            // console.log("token part : " + token);
-            // res.cookie("jwt", token, {
-            //     expires: new Date(Date.now() + 30000),
-            //     httpOnly: true
-            // });
-            // console.log("Cookie : ", cookie);
-            // //---
 
             const token = await createtoken();
             res.cookie('jwt_token', token, { httpOnly: true });
@@ -111,6 +102,23 @@ const registerAdmin = async (req, res) => {
     }
 }
 
+//image upload
+const uploadAdminImage = async (req, res) => {
+    try {
+        if (req.file !== undefined) {
+            const picture = ({
+                url: '/adminImages/' + req.file.filename,
+            });
+            res.status(200).send({ success: true, data: picture });
+        }
+        else {
+            res.status(400).send({ success: false, msg: "plz select a file" });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 
 //Login admin
 const adminlogin = async (req, res) => {
@@ -125,19 +133,9 @@ const adminlogin = async (req, res) => {
 
             if (passwordMatch) {
 
-                // //method2
-                // const token = await adminData.createtoken();
-                // console.log("token part : " + token);
-                // res.cookie("jwt", token, {
-                //     expires: new Date(Date.now() + 5000),
-                //     httpOnly: true,
-                // });
-                // console.log(`this is the cookie : ${req.cookies.jwt}`);
-                // //----
-
                 //method1
                 const tokenData = await createtoken(adminData._id);
-                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+                res.cookie('jwt_token', tokenData, { httpOnly: true, expires: new Date(Date.now() + 1 * 60 * 60 * 1000) });
 
                 const adminResult = {
                     _id: adminData._id,
@@ -264,40 +262,6 @@ const adminLogout = async (req, res) => {
     }
 }
 
-//admin profile edit and update
-const adminProfileEdit = async (req, res) => {
-    try {
-        if (req.file !== undefined) {
-            var id = req.body.id;
-            var fname = req.body.fname;
-            var lname = req.body.lname;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            // var password = spassword;
-            var profilepic = '/adminImages/' + req.file.filename;
-
-            await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email, profilepic: profilepic } });
-
-            res.status(200).send({ success: true, msg: 'Admin Updated' });
-        }
-        else {
-            var id = req.body.id;
-            var fname = req.body.fname;
-            var lname = req.body.lname;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            // var password = spassword;
-            // var profilepic = '/adminImages/' + req.file.filename;
-
-            await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email } });
-
-            res.status(200).send({ success: true, msg: 'Admin Updated' });
-        }
-    } catch (error) {
-        res.status(400).send({ success: false, msg: error.message });
-    }
-}
-
 module.exports = {
     registerAdmin,
     adminlogin,
@@ -305,5 +269,5 @@ module.exports = {
     resetpassword,
     updatePassword,
     adminLogout,
-    adminProfileEdit
+    uploadAdminImage
 }

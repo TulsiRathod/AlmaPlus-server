@@ -39,8 +39,7 @@ const uploadPic = (req, res, next) => {
             let Urls = [];
             for (i = 0; i < req.files.length; i++) {
                 // Urls[i] = process.env.WEB_URL + "/public/eventImages" + req.files[i].filename;
-                // Urls[i] = `${req.protocol}://${req.get('host')}/eventImages/` + req.files[i].filename;
-                Urls[i] = `/eventImages/` + req.files[i].filename;
+                Urls[i] = `${req.protocol}://${req.get('host')}/public/eventImages/` + req.files[i].filename;
             }
             req.images = Urls;
             next();

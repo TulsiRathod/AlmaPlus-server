@@ -27,19 +27,18 @@ const storage = multer.diskStorage({
     }
 });
 
-
 const upload = multer({ storage: storage });
 
 const admin_controller = require("../controllers/adminController");
 
 //admin routes
-admin_route.post('/registerAdmin', upload.single('profilepic'), admin_controller.registerAdmin);
+admin_route.post('/registerAdmin', admin_controller.registerAdmin);
 admin_route.post('/adminLogin', admin_controller.adminlogin);
 admin_route.post('/updatepassword', admin_controller.updatePassword);
 admin_route.post('/forgetpassword', admin_controller.forgetPassword);
 admin_route.get('/resetpassword', admin_controller.resetpassword);
 admin_route.get('/adminLogout', admin_controller.adminLogout);
-admin_route.post('/adminProfileEdit', admin_controller.adminProfileEdit);
+admin_route.post('/uploadAdminImage', upload.single('profilepic'), admin_controller.uploadAdminImage);
 
 module.exports = admin_route;
 

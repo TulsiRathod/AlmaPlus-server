@@ -67,9 +67,7 @@ const securePassword = async (password) => {
 //Register user
 const registerUser = async (req, res) => {
     try {
-
         const spassword = await securePassword(req.body.password);
-
         const user = new User({
             fname: req.body.fname,
             lname: req.body.lname,
@@ -77,7 +75,7 @@ const registerUser = async (req, res) => {
             nationality: req.body.nationality,
             dob: req.body.dob,
             address: req.body.address,
-            profilepic: '/userImages/' + req.file.filename,
+            profilepic: req.body.profilepic,
             phone: req.body.phone,
             email: req.body.email,
             password: spassword,
@@ -114,16 +112,31 @@ const registerUser = async (req, res) => {
             const token = await createtoken();
             res.cookie('jwt_token', token, { httpOnly: true });
 
-            console.log("token part : " + token);
+            // console.log("token part : " + token);
 
             const user_data = await user.save();
-            res.status(200).send({ success: true, data: token });
-
+            res.status(200).send({ success: true, data: user_data });
         }
 
     } catch (error) {
         res.status(400).send(error.message);
         console.log("Error in Register User : " + error.message);
+    }
+}
+
+const uploadUserImage = async (req, res) => {
+    try {
+        if (req.file !== undefined) {
+            const picture = ({
+                url: '/userImages/' + req.file.filename,
+            });
+            res.status(200).send({ success: true, data: picture });
+        }
+        else {
+            res.status(400).send({ success: false, msg: "plz select a file" });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 }
 
@@ -139,6 +152,7 @@ const userlogin = async (req, res) => {
             const passwordMatch = await bcryptjs.compare(password, userData.password);
 
             if (passwordMatch) {
+
                 // //method2
                 // const token = await userData.createtoken();
                 // console.log("token part : " + token);
@@ -177,7 +191,7 @@ const userlogin = async (req, res) => {
                     designation: userData.designation,
                     experience: userData.experience,
                     role: userData.role,
-                    token: tokenData
+                    // token: tokenData
                 }
 
                 const response = {
@@ -286,73 +300,36 @@ const resetpassword = async (req, res) => {
 //user profile edit and update
 const userProfileEdit = async (req, res) => {
     try {
-        if (req.file !== undefined) {
-            var id = req.body.id;
-            var fname = req.body.fname;
-            var lname = req.body.lname;
-            var gender = req.body.gender;
-            var nationality = req.body.nationality;
-            var dob = req.body.dob;
-            var address = req.body.address;
-            var profilepic = '/userImages/' + req.file.filename;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            // var password = spassword;
-            var languages = req.body.languages;
-            var github = req.body.github;
-            var linkedin = req.body.linkedin;
-            var portfolioweb = req.body.portfolioweb;
-            var institute = req.body.institute;
-            var yearofjoining = req.body.yearofjoining;
-            var course = req.body.course;
-            var skills = req.body.skills;
-            var companyname = req.body.companyname;
-            var designation = req.body.designation;
-            var experience = req.body.experience;
-            var role = req.body.role
+        var id = req.body.id;
+        var fname = req.body.fname;
+        var lname = req.body.lname;
+        var gender = req.body.gender;
+        var nationality = req.body.nationality;
+        var dob = req.body.dob;
+        var address = req.body.address;
+        var profilepic = req.body.profilepic;
+        var phone = req.body.phone;
+        var email = req.body.email;
+        // var password = spassword;
+        var languages = req.body.languages;
+        var github = req.body.github;
+        var linkedin = req.body.linkedin;
+        var portfolioweb = req.body.portfolioweb;
+        var institute = req.body.institute;
+        var yearofjoining = req.body.yearofjoining;
+        var course = req.body.course;
+        var skills = req.body.skills;
+        var companyname = req.body.companyname;
+        var designation = req.body.designation;
+        var experience = req.body.experience;
+        var role = req.body.role
 
-            await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, nationality: nationality, dob: dob, address: address, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, institute: institute, yearofjoining: yearofjoining, course: course, skills: skills, companyname: companyname, designation: designation, experience: experience, role: role } });
+        await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, nationality: nationality, dob: dob, address: address, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, institute: institute, yearofjoining: yearofjoining, course: course, skills: skills, companyname: companyname, designation: designation, experience: experience, role: role } });
 
-            res.status(200).send({ success: true, msg: 'User Profile Updated' });
-        }
-        else {
-            var id = req.body.id;
-            var fname = req.body.fname;
-            var lname = req.body.lname;
-            var gender = req.body.gender;
-            var nationality = req.body.nationality;
-            var dob = req.body.dob;
-            var address = req.body.address;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            // var password = password;
-            var languages = req.body.languages;
-            var github = req.body.github;
-            var linkedin = req.body.linkedin;
-            var portfolioweb = req.body.portfolioweb;
-            var institute = req.body.institute;
-            var yearofjoining = req.body.yearofjoining;
-            var course = req.body.course;
-            var skills = req.body.skills;
-            var companyname = req.body.companyname;
-            var designation = req.body.designation;
-            var experience = req.body.experience;
-            var role = req.body.role
-
-            await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, nationality: nationality, dob: dob, address: address, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, institute: institute, yearofjoining: yearofjoining, course: course, skills: skills, companyname: companyname, designation: designation, experience: experience, role: role } });
-            res.status(200).send({ success: true, msg: 'User Items Updated' });
-        }
-    } catch (error) {
-        res.status(400).send({ success: false, msg: error.message });
+        res.status(200).send({ success: true, msg: 'User Profile Updated' });
     }
-}
 
-//view users
-const getUsers = async (req, res) => {
-    try {
-        const user_data = await User.find({});
-        res.status(200).send({ success: true, data: user_data });
-    } catch (error) {
+    catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
@@ -395,5 +372,5 @@ module.exports = {
     userProfileEdit,
     searchUser,
     userLogout,
-    getUsers
+    uploadUserImage
 }

@@ -4,12 +4,9 @@ const institute = new mongoose.Schema({
     name: {
         type: String,
     },
-    address: [{
-        area: String,
-        city: String,
-        state: String,
-        country: String
-    }],
+    address: {
+        type: String
+    },
     phone: {
         type: String
     },
@@ -26,7 +23,8 @@ const institute = new mongoose.Schema({
         type: String
     },
     active: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 });
 
