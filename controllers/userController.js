@@ -363,6 +363,16 @@ const userLogout = async (req, res) => {
     }
 }
 
+const getUsers = async (req, res) => {
+    try {
+        const user_data = await User.find({});
+        res.status(200).send({ success: true, data: user_data });
+    }
+    catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 module.exports = {
     registerUser,
     userlogin,
@@ -372,5 +382,6 @@ module.exports = {
     userProfileEdit,
     searchUser,
     userLogout,
-    uploadUserImage
+    uploadUserImage,
+    getUsers
 }

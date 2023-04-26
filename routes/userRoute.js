@@ -39,6 +39,7 @@ user_route.get('/userResetPassword', user_controller.resetpassword);
 user_route.post('/userProfileEdit', user_controller.userProfileEdit);
 user_route.get('/searchUser', user_controller.searchUser);
 user_route.get('/userLogout', user_controller.userLogout);
+user_route.get('/getUsers', user_controller.getUsers);
 
 user_route.post('/uploadUserImage', upload.single('profilepic'), user_controller.uploadUserImage);
 
