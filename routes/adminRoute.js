@@ -37,6 +37,7 @@ admin_route.post('/adminLogin', admin_controller.adminlogin);
 admin_route.post('/updatepassword', admin_controller.updatePassword);
 admin_route.post('/forgetpassword', admin_controller.forgetPassword);
 admin_route.get('/resetpassword', admin_controller.resetpassword);
+admin_route.post('/adminUpdate', admin_controller.updateAdmin);
 admin_route.get('/adminLogout', admin_controller.adminLogout);
 admin_route.post('/uploadAdminImage', upload.single('profilepic'), admin_controller.uploadAdminImage);
 

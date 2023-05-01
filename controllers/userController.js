@@ -222,23 +222,28 @@ const userlogin = async (req, res) => {
 //user update password
 const updatePassword = async (req, res) => {
     try {
-
         const user_id = req.body.user_id;
-        const password = req.body.password;
+        var oldpassword = req.body.oldpassword;
+        var newpassword = req.body.newpassword;
 
         const data = await User.findOne({ _id: user_id });
         if (data) {
-            const newpassword = await securePassword(password);
-            const userData = await User.findByIdAndUpdate({ _id: user_id }, {
-                $set: {
-                    password: newpassword
-                }
-            });
+            const passwordMatch = await bcryptjs.compare(oldpassword, data.password);
+            if (passwordMatch) {
+                newpassword = await securePassword(newpassword);
+                const userData = await User.findByIdAndUpdate({ _id: user_id }, {
+                    $set: {
+                        password: newpassword
+                    }
+                }, { new: true });
 
-            res.status(200).send({ success: true, msg: "Your password has been updated" });
+                res.status(200).send({ success: true, msg: "Your password has been updated", data: userData });
+            } else {
+                res.status(400).send({ success: false, msg: "Your Old password is incorrect" });
+            }
         }
         else {
-            res.status(200).send({ success: false, msg: "User Id not found!" });
+            res.status(400).send({ success: false, msg: "User Id not found!" });
         }
 
     } catch (error) {

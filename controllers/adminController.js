@@ -177,23 +177,28 @@ const adminlogin = async (req, res) => {
 const updatePassword = async (req, res) => {
     try {
         const admin_id = req.body.admin_id;
-        const password = req.body.password;
+        var oldpassword = req.body.oldpassword;
+        var newpassword = req.body.newpassword;
 
         const data = await Admin.findOne({ _id: admin_id });
         if (data) {
-            const newpassword = await securePassword(password);
-            const adminData = await Admin.findByIdAndUpdate({ _id: admin_id }, {
-                $set: {
-                    password: newpassword
-                }
-            });
+            const passwordMatch = await bcryptjs.compare(oldpassword, data.password);
+            if (passwordMatch) {
+                newpassword = await securePassword(newpassword);
+                const adminData = await Admin.findByIdAndUpdate({ _id: admin_id }, {
+                    $set: {
+                        password: newpassword
+                    }
+                }, { new: true });
 
-            res.status(200).send({ success: true, msg: "Your password has been updated" });
+                res.status(200).send({ success: true, msg: "Your password has been updated", data: adminData });
+            } else {
+                res.status(400).send({ success: false, msg: "Your Old password is incorrect" });
+            }
         }
         else {
-            res.status(200).send({ success: false, msg: "Admin Id not found!" });
+            res.status(400).send({ success: false, msg: "Admin Id not found!" });
         }
-
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -250,6 +255,24 @@ const resetpassword = async (req, res) => {
     }
 }
 
+//admin  edit and update
+const updateAdmin = async (req, res) => {
+    try {
+        var id = req.body.id;
+        var fname = req.body.fname;
+        var lname = req.body.lname;
+        var phone = req.body.phone;
+        var email = req.body.email;
+        var profilepic = req.body.profilepic;
+
+        const admin_data = await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email, profilepic: profilepic } }, { new: true });
+        res.status(200).send({ success: true, msg: 'admin Updated', data: admin_data });
+
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 
 //Logout
 const adminLogout = async (req, res) => {
@@ -269,5 +292,6 @@ module.exports = {
     resetpassword,
     updatePassword,
     adminLogout,
+    updateAdmin,
     uploadAdminImage
 }

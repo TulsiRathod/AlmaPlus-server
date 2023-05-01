@@ -161,22 +161,30 @@ const instituteLogin = async (req, res) => {
 //user update password
 const instituteUpdatePassword = async (req, res) => {
     try {
-        const institute_id = req.body.institute_id;
-        const password = req.body.password;
+        var institute_id = req.body.institute_id;
+        var oldpassword = req.body.oldpassword;
+        var newpassword = req.body.newpassword;
+
         const data = await Institute.findOne({ _id: institute_id });
         if (data) {
-            const newpassword = await securePassword(password);
-            const instituteData = await Institute.findByIdAndUpdate({ _id: institute_id }, {
-                $set: {
-                    password: newpassword
-                }
-            });
+            const passwordMatch = await bcryptjs.compare(oldpassword, data.password);
+            if (passwordMatch) {
+                newpassword = await securePassword(newpassword);
+                const instituteData = await Institute.findByIdAndUpdate({ _id: institute_id }, {
+                    $set: {
+                        password: newpassword
+                    }
+                }, { new: true });
 
-            res.status(200).send({ success: true, msg: "Your password has been updated" });
+                res.status(200).send({ success: true, msg: "Your password has been updated", data: instituteData });
+            } else {
+                res.status(400).send({ success: false, msg: "Your Old password is incorrect" });
+            }
         }
         else {
-            res.status(200).send({ success: false, msg: "Institute Id not found!" });
+            res.status(400).send({ success: false, msg: "Institute Id not found!" });
         }
+
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -236,7 +244,6 @@ const instituteResetPassword = async (req, res) => {
 //institute  edit and update
 const updateInstitute = async (req, res) => {
     try {
-
         var id = req.body.id;
         var name = req.body.name;
         var address = req.body.address;
