@@ -6,15 +6,12 @@ const user = new mongoose.Schema({
     fname:
     {
         type: String,
-
     },
     lname: {
         type: String,
-
     },
     gender: {
         type: String,
-
     },
     nationality: {
         type: String,
@@ -42,7 +39,6 @@ const user = new mongoose.Schema({
     },
     password: {
         type: String,
-
     },
     languages: {
         type: String,

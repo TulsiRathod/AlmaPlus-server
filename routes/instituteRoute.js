@@ -35,6 +35,7 @@ institute_route.post('/instituteUpdate', institute_controller.updateInstitute);
 institute_route.delete('/deleteInstitute/:id', institute_controller.deleteInstitute);
 institute_route.get('/getInstitutes', institute_controller.getInstitues);
 institute_route.get('/searchInstitute', institute_controller.searchInstitute);
+institute_route.post('/inviteUser', institute_controller.inviteUser);
 
 institute_route.post('/uploadInstituteImage', upload.single('image'), institute_controller.uploadInstituteImage);
 

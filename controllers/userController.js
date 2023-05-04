@@ -145,14 +145,10 @@ const userlogin = async (req, res) => {
     try {
         const email = req.body.email;
         const password = req.body.password;
-
         const userData = await User.findOne({ email: email });
-
         if (userData) {
             const passwordMatch = await bcryptjs.compare(password, userData.password);
-
             if (passwordMatch) {
-
                 // //method2
                 // const token = await userData.createtoken();
                 // console.log("token part : " + token);

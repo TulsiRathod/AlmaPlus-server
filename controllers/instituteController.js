@@ -1,4 +1,5 @@
 const Institute = require("../models/instituteModel");
+const User = require("../models/userModel");
 const bcryptjs = require("bcryptjs");
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
@@ -38,7 +39,6 @@ const sendresetpasswordMail = async (name, email, token) => {
                 pass: config.emailPassword
             }
         });
-
         const mailoptions = {
             from: config.emailUser,
             to: email,
@@ -46,7 +46,6 @@ const sendresetpasswordMail = async (name, email, token) => {
             // html: '<p>Hello ' + name + ', Please copy the link and <a href="localhost:5000/api/userResetPassword?token=' + token + '" style="color:blue"> reset your password</a></p>'
             html: '<p>Hello ' + name + ', Please copy the link to<a href="http://localhost:5000/api/instituteResetPassword?token=' + token + '"> reset your password</a></p>'
         }
-
         transporter.sendMail(mailoptions, function (error, info) {
             if (error) {
                 console.log("error while sending : ", error);
@@ -55,7 +54,37 @@ const sendresetpasswordMail = async (name, email, token) => {
                 console.log("Mail has been sent :- ", info.response);
             }
         })
-
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+//method for send mail for invitation
+const sendInvitationMail = async (name, email, tempPass) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: config.emailUser,
+                pass: config.emailPassword
+            }
+        });
+        const mailoptions = {
+            from: config.emailUser,
+            to: email,
+            subject: 'You are invited to connect AlmaPlus+',
+            html: '<p>Hello ' + name + ', You are invited to connect with AlmaPlus Your Password is : ' + tempPass + '</p><p>Please Click on a link to <a href="https://alma-plus-main.vercel.app/login">Login</a> to your Account</p>'
+        }
+        transporter.sendMail(mailoptions, function (error, info) {
+            if (error) {
+                console.log("error while sending : ", error);
+            }
+            else {
+                console.log("Mail has been sent :- ", info.response);
+            }
+        })
     } catch (error) {
         console.log(error.message);
     }
@@ -299,6 +328,35 @@ const searchInstitute = async (req, res) => {
     }
 }
 
+//invite user
+const inviteUser = async (req, res) => {
+    try {
+        const randpassword = randomstring.generate(5);
+        const spassword = await securePassword(randpassword);
+        const user = new User({
+            fname: req.body.fname,
+            phone: req.body.phone,
+            email: req.body.email,
+            password: spassword,
+        });
+
+        const userData = await User.findOne({ email: req.body.email });
+        if (userData) {
+            res.status(400).send({ success: false, msg: "User already exists" });
+        }
+        else {
+            const user_data = await user.save();
+            sendInvitationMail(user_data.fname, user_data.email, randpassword);
+            res.status(200).send({ success: true, data: user_data });
+        }
+
+    } catch (error) {
+        res.status(400).send(error.message);
+        console.log("Error in Register User : " + error.message);
+    }
+}
+
+
 module.exports = {
     registerInstitute,
     instituteLogin,
@@ -309,5 +367,6 @@ module.exports = {
     deleteInstitute,
     getInstitues,
     searchInstitute,
-    uploadInstituteImage
+    uploadInstituteImage,
+    inviteUser
 }
