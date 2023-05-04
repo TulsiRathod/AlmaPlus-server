@@ -339,7 +339,6 @@ const inviteUser = async (req, res) => {
             email: req.body.email,
             password: spassword,
         });
-
         const userData = await User.findOne({ email: req.body.email });
         if (userData) {
             res.status(400).send({ success: false, msg: "User already exists" });
@@ -347,12 +346,12 @@ const inviteUser = async (req, res) => {
         else {
             const user_data = await user.save();
             sendInvitationMail(user_data.fname, user_data.email, randpassword);
-            res.status(200).send({ success: true, data: user_data });
+            res.status(200).send({ success: true, data: user_data, msg: "email sent" });
         }
 
     } catch (error) {
         res.status(400).send(error.message);
-        console.log("Error in Register User : " + error.message);
+        console.log("Error in invite User API : " + error.message);
     }
 }
 
