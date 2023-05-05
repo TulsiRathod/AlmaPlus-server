@@ -56,6 +56,8 @@ post_route.post('/addPost', uploadPic, post_controller.addPost);
 post_route.get('/getPost', post_controller.getPosts);
 post_route.delete('/deletePost/:id', post_controller.deletePost);
 post_route.post('/editPost', uploadPic, post_controller.editPost);
+post_route.put('/like/:id', post_controller.likeUnlikePost);
+post_route.get('/getFriendsPost/all', post_controller.getFriendsPost);
 
 module.exports = post_route;
 

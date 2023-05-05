@@ -15,13 +15,13 @@ const post = new mongoose.Schema({
         type: Array
     },
     likes: {
-        type: Number,
-        default: 0
-    },
-    comments: {
         type: Array,
-        default: ''
-    }
+        default: []
+    },
+    // comments: {
+    //     type: Array,
+    //     default: []
+    // }
 });
 
 

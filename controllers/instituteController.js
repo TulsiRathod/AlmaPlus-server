@@ -346,7 +346,7 @@ const inviteUser = async (req, res) => {
         else {
             const user_data = await user.save();
             sendInvitationMail(user_data.fname, user_data.email, randpassword);
-            res.status(200).send({ success: true, data: user_data, msg: "email sent" });
+            res.status(200).send({ success: true, msg: "email sent", data: user_data });
         }
 
     } catch (error) {

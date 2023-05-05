@@ -40,6 +40,8 @@ user_route.post('/userProfileEdit', user_controller.userProfileEdit);
 user_route.get('/searchUser', user_controller.searchUser);
 user_route.get('/userLogout', user_controller.userLogout);
 user_route.get('/getUsers', user_controller.getUsers);
+user_route.put("/follow/:id", user_controller.followUser);
+user_route.put("/unfollow/:id", user_controller.unfollowUser);
 
 user_route.post('/uploadUserImage', upload.single('profilepic'), user_controller.uploadUserImage);
 
