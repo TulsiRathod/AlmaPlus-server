@@ -110,12 +110,12 @@ const registerUser = async (req, res) => {
             // //---
 
             const token = await createtoken();
-            res.cookie('jwt_token', token, { httpOnly: true });
-
+            // res.cookie('jwt_token', token, { httpOnly: true });
             // console.log("token part : " + token);
+            // res.send(token);
 
             const user_data = await user.save();
-            res.status(200).send({ success: true, data: user_data });
+            res.status(200).send({ success: true, data: user_data, token: token });
         }
 
     } catch (error) {
@@ -161,7 +161,7 @@ const userlogin = async (req, res) => {
 
                 //method1
                 const tokenData = await createtoken(userData._id);
-                res.cookie('jwt_token', tokenData, { httpOnly: true });
+                // res.cookie('jwt_token', tokenData, { httpOnly: true });
 
                 const userResult = {
                     _id: userData._id,
@@ -201,7 +201,7 @@ const userlogin = async (req, res) => {
             }
             else {
                 // console.log("password incorrect")
-                res.status(400).send({ success: false, msg: "Login details are incorrect (password incorrect)" });
+                res.status(400).send({ success: false, msg: "Login details are incorrect (password incorrect)", token: tokenData });
             }
         } else {
             // console.log("email not exists");
@@ -261,7 +261,6 @@ const forgetPassword = async (req, res) => {
             });
 
             sendresetpasswordMail(userData.fname, userData.email, randomString);
-
             res.status(200).send({ success: true, msg: "Please Check your inbox of mail and reset your password" });
 
         }
@@ -351,6 +350,17 @@ const searchUser = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
+//search user by id
+const searchUserById = async (req, res) => {
+    try {
+        const user = await User.find({
+            _id: req.params._id
+        });
+        res.status(200).send({ success: true, data: user });
+    } catch (error) {
+        res.status(500).send({ success: false, msg: error.message });
+    }
+}
 
 //Logout
 const userLogout = async (req, res) => {
@@ -428,5 +438,6 @@ module.exports = {
     uploadUserImage,
     getUsers,
     followUser,
-    unfollowUser
+    unfollowUser,
+    searchUserById
 }
