@@ -6,7 +6,7 @@ const addPost = async (req, res) => {
     try {
         const post = new Post({
             userid: req.body.userid,
-            fname: req.body.userid,
+            fname: req.body.fname,
             lname: req.body.lname,
             designation: req.body.designation,
             companyname: req.body.companyname,
