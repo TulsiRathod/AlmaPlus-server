@@ -5,11 +5,27 @@ const post = new mongoose.Schema({
         type: String,
         // required: true
     },
+    fname: {
+        type: String,
+    },
+    lname: {
+        type: String,
+    },
+    designation: {
+        type: String,
+    },
+    companyname: {
+        type: String,
+    },
+    profilepic: {
+        type: String,
+    },
     description: {
         type: String,
     },
     date: {
         type: Date,
+        default: Date.now()
     },
     photos: {
         type: Array

@@ -6,13 +6,17 @@ const addPost = async (req, res) => {
     try {
         const post = new Post({
             userid: req.body.userid,
+            fname: req.body.userid,
+            lname: req.body.lname,
+            designation: req.body.designation,
+            companyname: req.body.companyname,
+            profilepic: req.body.profilepic,
             description: req.body.description,
             date: req.body.date,
             photos: req.images,
             // likes: req.body.likes,
             // comments: req.body.comments
         });
-
         const userData = await User.findOne({ _id: req.body.userid });
 
         if (userData._id == '') {
@@ -33,7 +37,7 @@ const addPost = async (req, res) => {
 //get all post
 const getPosts = async (req, res) => {
     try {
-        const post_data = await Post.find({});
+        const post_data = await Post.find({}).limit(20);
         res.status(200).send({ success: true, data: post_data });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });

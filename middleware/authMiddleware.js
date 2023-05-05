@@ -5,7 +5,6 @@ const requireAuth = (req, res, next) => {
 
     const token = req.cookies.jwt_token;
     //check jwt exists & its verified
-
     if (token) {
         jwt.verify(token, config.secret_jwt, (err, decodedToken) => {
             if (err) {
