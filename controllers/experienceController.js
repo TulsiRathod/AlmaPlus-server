@@ -57,16 +57,15 @@ const editExperience = async (req, res) => {
 //image upload
 const uploadExperienceImage = async (req, res) => {
     try {
-        console.log("hello");
-        // if (req.file !== undefined) {
-        //     const picture = ({
-        //         url: '/experienceImages/' + req.file.filename,
-        //     });
-        //     res.status(200).send({ success: true, data: picture });
-        // }
-        // else {
-        //     res.status(400).send({ success: false, msg: "plz select a file" });
-        // }
+        if (req.file !== undefined) {
+            const picture = ({
+                url: '/experienceImages/' + req.file.filename,
+            });
+            res.status(200).send({ success: true, data: picture });
+        }
+        else {
+            res.status(400).send({ success: false, msg: "plz select a file" });
+        }
     } catch (error) {
         res.status(400).send(error.message);
     }

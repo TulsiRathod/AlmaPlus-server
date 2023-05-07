@@ -9,6 +9,7 @@ const addEducation = async (req, res) => {
             course: req.body.course,
             joinyear: req.body.joinyear,
             endyear: req.body.endyear,
+            collagelogo: req.body.collagelogo
         });
         const education_data = await education.save();
         res.status(200).send({ success: true, data: education_data });
@@ -48,18 +49,35 @@ const editEducation = async (req, res) => {
         var course = req.body.course;
         var joinyear = req.body.joinyear;
         var endyear = req.body.endyear;
+        var collagelogo = req.body.collagelogo;
 
-        const education_data = await Education.findByIdAndUpdate({ _id: id }, { $set: { institutename: institutename, course: course, joinyear: joinyear, endyear: endyear } }, { new: true });
+        const education_data = await Education.findByIdAndUpdate({ _id: id }, { $set: { institutename: institutename, course: course, joinyear: joinyear, endyear: endyear, collagelogo: collagelogo } }, { new: true });
         res.status(200).send({ success: true, msg: 'education Updated', data: education_data });
 
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
-
+//image upload
+const uploadEducationImage = async (req, res) => {
+    try {
+        if (req.file !== undefined) {
+            const picture = ({
+                url: '/educationImages/' + req.file.filename,
+            });
+            res.status(200).send({ success: true, data: picture });
+        }
+        else {
+            res.status(200).send({ success: false, msg: "plz select a file" });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
 module.exports = {
     addEducation,
     getEducation,
     deleteEducation,
     editEducation,
+    uploadEducationImage
 }

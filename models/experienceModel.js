@@ -1,12 +1,3 @@
-// experience: [{
-//     companyname: { type: String },
-//     position: { type: String },
-//     joindate: { Date },
-//     enddate: { Date },
-//     companylogo: { type: String },
-//     description: { type: String }
-// }],
-
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");

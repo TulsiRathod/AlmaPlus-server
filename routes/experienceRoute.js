@@ -1,12 +1,14 @@
 const express = require("express");
 const experience_route = express();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 experience_route.use(bodyParser.json());
 experience_route.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const path = require('path');
 experience_route.use(express.static('public'));
+experience_route.use(cookieParser());
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

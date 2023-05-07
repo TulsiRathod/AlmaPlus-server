@@ -16,7 +16,7 @@ const education = new mongoose.Schema({
     endyear: {
         type: Date
     },
-    logo: {
+    collagelogo: {
         type: String
     }
 });
