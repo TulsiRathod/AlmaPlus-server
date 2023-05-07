@@ -13,14 +13,13 @@ const user = new mongoose.Schema({
     gender: {
         type: String,
     },
-    nationality: {
-        type: String,
-    },
     dob: {
         type: Date,
     },
     address: {
-        type: String,
+        city: { type: String },
+        state: { type: String },
+        nation: { type: String }
     },
     profilepic: {
         type: String,
@@ -46,26 +45,8 @@ const user = new mongoose.Schema({
     portfolioweb: {
         type: String,
     },
-    institute: {
-        type: String,
-    },
-    yearofjoining: {
-        type: String,
-    },
-    course: {
-        type: String,
-    },
     skills: {
         type: String,
-    },
-    companyname: {
-        type: String,
-    },
-    designation: {
-        type: String,
-    },
-    experience: {
-        type: Number,
     },
     followers: {
         type: Array,
@@ -79,7 +60,13 @@ const user = new mongoose.Schema({
         type: String,
         default: "student"
     },
-
+    about: {
+        type: String,
+    },
+    token: {
+        type: String,
+        default: ''
+    }
 });
 
 module.exports = mongoose.model("usersTB1", user);

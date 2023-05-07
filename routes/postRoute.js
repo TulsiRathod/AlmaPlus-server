@@ -58,6 +58,8 @@ post_route.delete('/deletePost/:id', post_controller.deletePost);
 post_route.post('/editPost', uploadPic, post_controller.editPost);
 post_route.put('/like/:id', post_controller.likeUnlikePost);
 post_route.get('/getFriendsPost/all', post_controller.getFriendsPost);
+post_route.get('/getPostById/:userid', post_controller.getPostById);
+post_route.post('/instituteAddPost', uploadPic, post_controller.instituteAddPost);
 
 module.exports = post_route;
 

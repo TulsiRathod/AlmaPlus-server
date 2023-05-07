@@ -18,6 +18,7 @@ const post_route = require('./routes/postRoute');
 const admin_route = require('./routes/adminRoute');
 const conversation_route = require('./routes/conversationRoute');
 const message_route = require('./routes/messageRoute');
+const education_route = require('./routes/educationRoute');
 
 app.use(cors());
 app.use(cookieParser());
@@ -29,6 +30,7 @@ app.use('/api', post_route);
 app.use('/api', admin_route);
 app.use('/api', conversation_route);
 app.use('/api', message_route);
+app.use('/api', education_route);
 
 app.get("/", (req, res) => {
     res.end("Hellooo");

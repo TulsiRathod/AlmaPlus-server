@@ -72,7 +72,6 @@ const registerUser = async (req, res) => {
             fname: req.body.fname,
             lname: req.body.lname,
             gender: req.body.gender,
-            nationality: req.body.nationality,
             dob: req.body.dob,
             address: req.body.address,
             profilepic: req.body.profilepic,
@@ -83,14 +82,8 @@ const registerUser = async (req, res) => {
             github: req.body.github,
             linkedin: req.body.linkedin,
             portfolioweb: req.body.portfolioweb,
-            institute: req.body.institute,
-            yearofjoining: req.body.yearofjoining,
-            course: req.body.course,
             skills: req.body.skills,
-            companyname: req.body.companyname,
-            designation: req.body.designation,
-            experience: req.body.experience,
-            role: req.body.role
+            role: req.body.role,
         });
 
         const userData = await User.findOne({ email: req.body.email });
@@ -161,14 +154,13 @@ const userlogin = async (req, res) => {
 
                 //method1
                 const tokenData = await createtoken(userData._id);
-                // res.cookie('jwt_token', tokenData, { httpOnly: true });
+                res.cookie('jwt_token', tokenData, { httpOnly: true });
 
                 const userResult = {
                     _id: userData._id,
                     fname: userData.fname,
                     lname: userData.lname,
                     gender: userData.gender,
-                    nationality: userData.nationality,
                     dob: userData.dob,
                     address: userData.address,
                     profilepic: userData.profilepic,
@@ -179,13 +171,7 @@ const userlogin = async (req, res) => {
                     github: userData.github,
                     linkedin: userData.linkedin,
                     portfolioweb: userData.portfolioweb,
-                    institute: userData.institute,
-                    yearofjoining: userData.yearofjoining,
-                    course: userData.course,
                     skills: userData.skills,
-                    companyname: userData.companyname,
-                    designation: userData.designation,
-                    experience: userData.experience,
                     role: userData.role,
                     // token: tokenData
                 }
@@ -221,7 +207,6 @@ const updatePassword = async (req, res) => {
         const user_id = req.body.user_id;
         var oldpassword = req.body.oldpassword;
         var newpassword = req.body.newpassword;
-
         const data = await User.findOne({ _id: user_id });
         if (data) {
             const passwordMatch = await bcryptjs.compare(oldpassword, data.password);
@@ -259,15 +244,12 @@ const forgetPassword = async (req, res) => {
                     token: randomString
                 }
             });
-
             sendresetpasswordMail(userData.fname, userData.email, randomString);
             res.status(200).send({ success: true, msg: "Please Check your inbox of mail and reset your password" });
-
         }
         else {
             res.status(200).send({ success: true, msg: "This Email is not exists!" });
         }
-
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
@@ -304,32 +286,33 @@ const userProfileEdit = async (req, res) => {
         var fname = req.body.fname;
         var lname = req.body.lname;
         var gender = req.body.gender;
-        var nationality = req.body.nationality;
         var dob = req.body.dob;
         var address = req.body.address;
         var profilepic = req.body.profilepic;
         var phone = req.body.phone;
         var email = req.body.email;
-        // var password = spassword;
         var languages = req.body.languages;
         var github = req.body.github;
         var linkedin = req.body.linkedin;
         var portfolioweb = req.body.portfolioweb;
-        var institute = req.body.institute;
-        var yearofjoining = req.body.yearofjoining;
-        var course = req.body.course;
         var skills = req.body.skills;
-        var companyname = req.body.companyname;
-        var designation = req.body.designation;
-        var experience = req.body.experience;
         var role = req.body.role
 
-        await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, nationality: nationality, dob: dob, address: address, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, institute: institute, yearofjoining: yearofjoining, course: course, skills: skills, companyname: companyname, designation: designation, experience: experience, role: role } });
+        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, address: address, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role } }, { new: true });
 
-        res.status(200).send({ success: true, msg: 'User Profile Updated' });
+        res.status(200).send({ success: true, msg: 'User Profile Updated', data: new_data });
     }
-
     catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+//delete user
+const deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const result = await User.deleteOne({ _id: id });
+        res.status(200).send({ success: true, msg: 'user Deleted successfully' });
+    } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
@@ -439,5 +422,6 @@ module.exports = {
     getUsers,
     followUser,
     unfollowUser,
-    searchUserById
+    searchUserById,
+    deleteUser
 }

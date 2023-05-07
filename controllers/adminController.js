@@ -71,8 +71,7 @@ const registerAdmin = async (req, res) => {
         const spassword = await securePassword(req.body.password);
 
         const admin = new Admin({
-            fname: req.body.fname,
-            lname: req.body.lname,
+            name: req.body.lname,
             phone: req.body.phone,
             email: req.body.email,
             password: spassword,
@@ -139,8 +138,7 @@ const adminlogin = async (req, res) => {
 
                 const adminResult = {
                     _id: adminData._id,
-                    fname: adminData.fname,
-                    lname: adminData.lname,
+                    name: adminData.name,
                     phone: adminData.phone,
                     email: adminData.email,
                     password: adminData.password,
@@ -259,13 +257,12 @@ const resetpassword = async (req, res) => {
 const updateAdmin = async (req, res) => {
     try {
         var id = req.body.id;
-        var fname = req.body.fname;
-        var lname = req.body.lname;
+        var name = req.body.name;
         var phone = req.body.phone;
         var email = req.body.email;
         var profilepic = req.body.profilepic;
 
-        const admin_data = await Admin.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, phone: phone, email: email, profilepic: profilepic } }, { new: true });
+        const admin_data = await Admin.findByIdAndUpdate({ _id: id }, { $set: { name: name, phone: phone, email: email, profilepic: profilepic } }, { new: true });
         res.status(200).send({ success: true, msg: 'admin Updated', data: admin_data });
 
     } catch (error) {
@@ -285,6 +282,18 @@ const adminLogout = async (req, res) => {
     }
 }
 
+//get admin by id
+const getAdminById = async (req, res) => {
+    try {
+        const admin = await Admin.find({
+            _id: req.params._id
+        });
+        res.status(200).send({ success: true, data: admin });
+    } catch (error) {
+        res.status(500).send({ success: false, msg: error.message });
+    }
+}
+
 module.exports = {
     registerAdmin,
     adminlogin,
@@ -293,5 +302,6 @@ module.exports = {
     updatePassword,
     adminLogout,
     updateAdmin,
-    uploadAdminImage
+    uploadAdminImage,
+    getAdminById
 }

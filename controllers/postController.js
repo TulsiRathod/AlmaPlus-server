@@ -1,5 +1,6 @@
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
+const Institute = require("../models/instituteModel");
 
 //Add post
 const addPost = async (req, res) => {
@@ -32,12 +33,49 @@ const addPost = async (req, res) => {
         console.log("Error in add post : " + error.message);
     }
 }
+//Add post for institute
+const instituteAddPost = async (req, res) => {
+    try {
+        const post = new Post({
+            userid: req.body.userid,
+            fname: req.body.fname,
+            profilepic: req.body.profilepic,
+            description: req.body.description,
+            photos: req.images,
+            // likes: req.body.likes,
+            // comments: req.body.comments
+        });
+        const instituteData = await Institute.findOne({ _id: req.body.userid });
+
+        if (instituteData._id == '') {
+            res.status(400).send({ success: false, msg: "institute not found..!" });
+        }
+        else {
+            const post_data = await post.save();
+            res.status(200).send({ success: true, data: post_data });
+        }
+
+    } catch (error) {
+        res.status(400).send(error.message);
+        console.log("Error in add post (Institute): " + error.message);
+    }
+}
 
 
 //get all post
 const getPosts = async (req, res) => {
     try {
         const post_data = await Post.find({}).limit(20);
+        res.status(200).send({ success: true, data: post_data });
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
+//get post by userid
+const getPostById = async (req, res) => {
+    try {
+        const post_data = await Post.find({ userid: req.params.userid });
         res.status(200).send({ success: true, data: post_data });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
@@ -119,5 +157,7 @@ module.exports = {
     deletePost,
     editPost,
     likeUnlikePost,
-    getFriendsPost
+    getFriendsPost,
+    getPostById,
+    instituteAddPost
 }
