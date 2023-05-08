@@ -73,7 +73,9 @@ const registerUser = async (req, res) => {
             lname: req.body.lname,
             gender: req.body.gender,
             dob: req.body.dob,
-            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            nation: req.body.nation,
             profilepic: req.body.profilepic,
             phone: req.body.phone,
             email: req.body.email,
@@ -83,6 +85,7 @@ const registerUser = async (req, res) => {
             linkedin: req.body.linkedin,
             portfolioweb: req.body.portfolioweb,
             skills: req.body.skills,
+            institute: req.body.institute,
             role: req.body.role,
         });
 
@@ -287,7 +290,9 @@ const userProfileEdit = async (req, res) => {
         var lname = req.body.lname;
         var gender = req.body.gender;
         var dob = req.body.dob;
-        var address = req.body.address;
+        var city = req.body.city;
+        var state = req.body.state;
+        var nation = req.body.nation;
         var profilepic = req.body.profilepic;
         var phone = req.body.phone;
         var email = req.body.email;
@@ -296,9 +301,10 @@ const userProfileEdit = async (req, res) => {
         var linkedin = req.body.linkedin;
         var portfolioweb = req.body.portfolioweb;
         var skills = req.body.skills;
+        var institute = req.body.institute;
         var role = req.body.role
 
-        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, address: address, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role } }, { new: true });
+        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, city: city, state: state, nation: nation, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role, institute: institute } }, { new: true });
 
         res.status(200).send({ success: true, msg: 'User Profile Updated', data: new_data });
     }

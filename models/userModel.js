@@ -16,11 +16,9 @@ const user = new mongoose.Schema({
     dob: {
         type: Date,
     },
-    address: {
-        city: { type: String },
-        state: { type: String },
-        nation: { type: String }
-    },
+    city: { type: String },
+    state: { type: String },
+    nation: { type: String },
     profilepic: {
         type: String,
     },
@@ -62,6 +60,9 @@ const user = new mongoose.Schema({
     },
     about: {
         type: String,
+    },
+    institute: {
+        type: String
     },
     token: {
         type: String,
