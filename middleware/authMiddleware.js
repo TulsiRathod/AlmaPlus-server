@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
 const requireAuth = (req, res, next) => {
-
     const token = req.cookies.jwt_token;
     //check jwt exists & its verified
     if (token) {

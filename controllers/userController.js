@@ -157,7 +157,7 @@ const userlogin = async (req, res) => {
 
                 //method1
                 const tokenData = await createtoken(userData._id);
-                res.cookie('jwt_token', tokenData, { httpOnly: true });
+                // res.cookie('jwt_token', tokenData, { httpOnly: true });
 
                 const userResult = {
                     _id: userData._id,
@@ -176,13 +176,13 @@ const userlogin = async (req, res) => {
                     portfolioweb: userData.portfolioweb,
                     skills: userData.skills,
                     role: userData.role,
-                    // token: tokenData
+                    token: tokenData
                 }
 
                 const response = {
                     success: true,
                     msg: "user details",
-                    data: userResult
+                    data: userResult,
                 }
 
                 console.log(tokenData);
