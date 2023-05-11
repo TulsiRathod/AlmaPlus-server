@@ -6,6 +6,12 @@ const connectToMongo = require("./db/conn");
 const cookieParser = require("cookie-parser");
 const port = 5000;
 const cors = require('cors');
+//for socket
+const io = require("socket.io")(8900, {
+    cors: {
+        origin: "https://alma-plus-server.vercel.app"
+    },
+});
 
 connectToMongo();
 
@@ -46,13 +52,8 @@ app.listen(port, function () {
 })
 
 
-// socket-------------------------
+//Socket server--------------
 
-const io = require("socket.io")(8900, {
-    cors: {
-        origin: "http://localhost:3000"
-    },
-});
 let users = [];
 
 const addUser = (userId, socketId) => {
@@ -69,6 +70,7 @@ const getUser = (userId) => {
 
 io.on("connection", (socket) => {
     // console.log("a user connected!");
+
     socket.on("addUser", userId => {
         addUser(userId, socket.id);
         io.emit("getUsers", users);
@@ -88,3 +90,4 @@ io.on("connection", (socket) => {
         })
     })
 })
+
