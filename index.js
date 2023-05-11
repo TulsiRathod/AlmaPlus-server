@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 const port = 5000;
 const cors = require('cors');
 //for socket
-const io = require("socket.io")(5000, {
+const io = require("socket.io")(8900, {
     cors: {
         origin: "http://20.106.152.112"
     },
