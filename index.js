@@ -9,7 +9,7 @@ const cors = require('cors');
 //for socket
 const io = require("socket.io")(8900, {
     cors: {
-        origin: "https://alma-plus-server.vercel.app"
+        origin: "http://localhost:3000"
     },
 });
 
