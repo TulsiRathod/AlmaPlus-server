@@ -2,20 +2,19 @@ const Feedback = require("../models/feedbackModel");
 
 //Add feedback
 const addFeedback = async (req, res) => {
+    // console.log("addfeedback called")
     try {
         const feedback = new Feedback({
             userid: req.body.userid,
             message: req.body.message,
             rate: req.body.rate
         });
-
         const feedback_data = await feedback.save();
         res.status(200).send({ success: true, data: feedback_data });
     } catch (error) {
-
+        res.status(400).send({ success: false, msg: "Error in add feedback" });
     }
 }
-
 
 //view feedback
 const getFeedback = async (req, res) => {

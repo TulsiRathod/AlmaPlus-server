@@ -6,13 +6,11 @@ const connectToMongo = require("./db/conn");
 const cookieParser = require("cookie-parser");
 const port = 5000;
 const cors = require('cors');
-//for socket
 const io = require("socket.io")(8900, {
     cors: {
         origin: "http://localhost:3000"
     },
 });
-
 connectToMongo();
 
 //routes
@@ -20,6 +18,7 @@ const user_route = require("./routes/userRoute");
 const event_route = require('./routes/eventRoute');
 const institute_route = require('./routes/instituteRoute');
 const course_route = require("./routes/courseRoute");
+const feedback_route = require("./routes/feedbackRoute");
 const post_route = require('./routes/postRoute');
 const admin_route = require('./routes/adminRoute');
 const conversation_route = require('./routes/conversationRoute');
@@ -39,6 +38,7 @@ app.use('/api', conversation_route);
 app.use('/api', message_route);
 app.use('/api', education_route);
 app.use('/api', experience_route);
+app.use('/api', feedback_route);
 
 app.get("/", (req, res) => {
     res.end("Hellooo");
@@ -50,10 +50,7 @@ app.use(express.static('public'));
 app.listen(port, function () {
     console.log("Server is ready");
 })
-
-
-//Socket server--------------
-
+//socket server---------
 let users = [];
 
 const addUser = (userId, socketId) => {
