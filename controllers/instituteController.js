@@ -44,7 +44,7 @@ const sendresetpasswordMail = async (name, email, token) => {
             to: email,
             subject: 'For Reset Password',
             // html: '<p>Hello ' + name + ', Please copy the link and <a href="localhost:5000/api/userResetPassword?token=' + token + '" style="color:blue"> reset your password</a></p>'
-            html: '<p>Hello ' + name + ', Please copy the link to<a href="http://localhost:5000/api/instituteResetPassword?token=' + token + '"> reset your password</a></p>'
+            html: '<p>Hello ' + name + ', Please copy the link to<a href="http://localhost:3000/new-password?token=' + token + '"> reset your password</a></p>'
         }
         transporter.sendMail(mailoptions, function (error, info) {
             if (error) {
@@ -231,16 +231,12 @@ const instituteForgetPassword = async (req, res) => {
                     token: randomString
                 }
             });
-
             sendresetpasswordMail(instituteData.name, instituteData.email, randomString);
-
-            res.status(400).send({ success: true, msg: "Please Check your inbox of mail and reset your password" });
-
+            res.status(200).send({ success: true, msg: "Please Check your inbox of mail and reset your password" });
         }
         else {
-            res.status(400).send({ success: true, msg: "This Email is not exists!" });
+            res.status(200).send({ success: true, msg: "This Email is not exists!" });
         }
-
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
     }
@@ -311,20 +307,15 @@ const getInstitues = async (req, res) => {
     }
 }
 
-//search institute
-const searchInstitute = async (req, res) => {
+//search institute by id
+const searchInstituteById = async (req, res) => {
     try {
-        var search = req.body.search;
-        var institute_data = await Institute.find({ "name": { $regex: ".*" + search + ".*" } });
-        if (institute_data.length > 0) {
-            res.status(200).send({ success: true, msg: "Institute Details", data: institute_data });
-        }
-        else {
-            res.status(200).send({ success: true, msg: 'Institute not Found' });
-        }
-
+        const institute = await Institute.findById({
+            _id: req.params._id
+        });
+        res.status(200).send({ success: true, data: institute });
     } catch (error) {
-        res.status(400).send({ success: false, msg: error.message });
+        res.status(500).send({ success: false, msg: error.message });
     }
 }
 
@@ -365,7 +356,7 @@ module.exports = {
     updateInstitute,
     deleteInstitute,
     getInstitues,
-    searchInstitute,
     uploadInstituteImage,
-    inviteUser
+    inviteUser,
+    searchInstituteById
 }

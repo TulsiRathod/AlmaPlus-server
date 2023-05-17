@@ -30,11 +30,11 @@ institute_route.post('/registerInstitute', institute_controller.registerInstitut
 institute_route.post('/instituteLogin', institute_controller.instituteLogin);
 institute_route.post('/instituteUpdatePassword', institute_controller.instituteUpdatePassword);
 institute_route.post('/instituteForgetPassword', institute_controller.instituteForgetPassword);
-institute_route.get('/instituteResetPassword', institute_controller.instituteResetPassword);
+institute_route.post('/instituteResetPassword', institute_controller.instituteResetPassword);
 institute_route.post('/instituteUpdate', institute_controller.updateInstitute);
 institute_route.delete('/deleteInstitute/:id', institute_controller.deleteInstitute);
 institute_route.get('/getInstitutes', institute_controller.getInstitues);
-institute_route.get('/searchInstitute', institute_controller.searchInstitute);
+institute_route.get('/getInstituteById/:_id', institute_controller.searchInstituteById);
 institute_route.post('/inviteUser', institute_controller.inviteUser);
 
 institute_route.post('/uploadInstituteImage', upload.single('image'), institute_controller.uploadInstituteImage);

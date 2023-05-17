@@ -25,6 +25,10 @@ const institute = new mongoose.Schema({
     active: {
         type: Boolean,
         default: false
+    },
+    token: {
+        type: String,
+        default: ''
     }
 });
 
