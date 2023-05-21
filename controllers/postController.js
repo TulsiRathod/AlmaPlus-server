@@ -9,7 +9,6 @@ const addPost = async (req, res) => {
             userid: req.body.userid,
             fname: req.body.fname,
             lname: req.body.lname,
-            designation: req.body.designation,
             companyname: req.body.companyname,
             profilepic: req.body.profilepic,
             description: req.body.description,

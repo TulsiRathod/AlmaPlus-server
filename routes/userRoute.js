@@ -41,6 +41,7 @@ user_route.get('/searchUser', user_controller.searchUser);
 user_route.get('/searchUserById/:_id', user_controller.searchUserById);
 user_route.get('/userLogout', user_controller.userLogout);
 user_route.get('/getUsers', user_controller.getUsers);
+user_route.get('/getUsersOfInstitute', user_controller.getUsersOfInstitute);
 user_route.put("/follow/:id", user_controller.followUser);
 user_route.put("/unfollow/:id", user_controller.unfollowUser);
 user_route.delete("/deleteUser/:id", user_controller.deleteUser);

@@ -25,6 +25,7 @@ const conversation_route = require('./routes/conversationRoute');
 const message_route = require('./routes/messageRoute');
 const education_route = require('./routes/educationRoute');
 const experience_route = require('./routes/experienceRoute');
+const company_route = require('./routes/companyRoute');
 
 app.use(cors());
 app.use(cookieParser());
@@ -39,6 +40,7 @@ app.use('/api', message_route);
 app.use('/api', education_route);
 app.use('/api', experience_route);
 app.use('/api', feedback_route);
+app.use('/api', company_route);
 
 app.get("/", (req, res) => {
     res.end("Hellooo");
@@ -50,7 +52,10 @@ app.use(express.static('public'));
 app.listen(port, function () {
     console.log("Server is ready");
 })
-//socket server---------
+
+
+
+//socket server--------------------
 let users = [];
 
 const addUser = (userId, socketId) => {

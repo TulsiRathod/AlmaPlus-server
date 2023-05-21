@@ -4,6 +4,7 @@ const Event = require("../models/EventModel");
 const addEvents = async (req, res) => {
     try {
         const event = new Event({
+            organizerid: req.body.organizerid,
             title: req.body.title,
             description: req.body.description,
             date: req.body.date,
@@ -30,7 +31,15 @@ const getEvents = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
-
+//view Events by institute
+const getEventsByInstitute = async (req, res) => {
+    try {
+        const evet_data = await Event.find({ organizerid: req.body.organizerid });
+        res.status(200).send({ success: true, data: evet_data });
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
 //delete event
 const deleteEvent = async (req, res) => {
     try {
@@ -89,10 +98,23 @@ const searchEvent = async (req, res) => {
     }
 }
 
+//get upcomming events
+const getUpcommingEvents = async (req, res) => {
+    try {
+        let start = Date.now();
+        const event_data = await Event.find({ date: { $gte: start } });
+        res.status(200).send({ success: true, data: event_data });
+    } catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 module.exports = {
     addEvents,
     getEvents,
     deleteEvent,
     editEvent,
-    searchEvent
+    searchEvent,
+    getUpcommingEvents,
+    getEventsByInstitute
 }

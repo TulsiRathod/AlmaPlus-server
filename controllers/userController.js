@@ -156,7 +156,7 @@ const userlogin = async (req, res) => {
                 // //----
 
                 //method1
-                const tokenData = await createtoken(userData._id);
+                // const tokenData = await createtoken(userData._id);
                 // res.cookie('jwt_token', tokenData, { httpOnly: true });
 
                 const userResult = {
@@ -176,7 +176,7 @@ const userlogin = async (req, res) => {
                     portfolioweb: userData.portfolioweb,
                     skills: userData.skills,
                     role: userData.role,
-                    token: tokenData
+                    // token: tokenData
                 }
 
                 const response = {
@@ -373,6 +373,18 @@ const getUsers = async (req, res) => {
     }
 }
 
+
+//get users of perticular institute
+const getUsersOfInstitute = async (req, res) => {
+    try {
+        const user_data = await User.find({ institute: req.body.name });
+        res.status(200).send({ success: true, data: user_data });
+    }
+    catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
+
 //follow a user     =>  router.put("/:id/follow"
 const followUser = async (req, res) => {
     if (req.body.userId !== req.params.id) {
@@ -429,5 +441,6 @@ module.exports = {
     followUser,
     unfollowUser,
     searchUserById,
-    deleteUser
+    deleteUser,
+    getUsersOfInstitute
 }

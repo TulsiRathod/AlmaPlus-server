@@ -11,9 +11,6 @@ const post = new mongoose.Schema({
     lname: {
         type: String,
     },
-    designation: {
-        type: String,
-    },
     companyname: {
         type: String,
     },
