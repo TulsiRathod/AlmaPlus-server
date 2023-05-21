@@ -60,6 +60,7 @@ const user = new mongoose.Schema({
     },
     about: {
         type: String,
+        default: ''
     },
     institute: {
         type: String
