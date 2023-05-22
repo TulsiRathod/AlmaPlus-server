@@ -31,7 +31,7 @@ const education_controller = require("../controllers/educationController");
 
 //Education routes
 education_route.post('/addEducation', education_controller.addEducation);
-education_route.get('/getEducation', education_controller.getEducation);
+education_route.post('/getEducation', education_controller.getEducation);
 education_route.delete('/deleteEducation/:id', education_controller.deleteEducation);
 education_route.post('/editEducation', education_controller.editEducation);
 education_route.post('/uploadCollageLogo', upload.single('collagelogo'), education_controller.uploadEducationImage);
