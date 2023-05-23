@@ -8,7 +8,7 @@ const port = 5000;
 const cors = require('cors');
 const io = require("socket.io")(8900, {
     cors: {
-        origin: "http://20.106.152.112:3000"
+        origin: "http://localhost:3000"
     },
 });
 connectToMongo();
@@ -89,6 +89,14 @@ io.on("connection", (socket) => {
         io.to(user.socketId).emit("getMessage", {
             senderId,
             text,
+        })
+    })
+
+    socket.on("sendNotification", ({ senderid, receiverid, type }) => {
+        const user = getUser(receiverid);
+        io.to(user.socketId).emit("getNotification", {
+            senderid,
+            type,
         })
     })
 })

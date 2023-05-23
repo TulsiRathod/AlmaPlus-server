@@ -185,7 +185,7 @@ const userlogin = async (req, res) => {
                     data: userResult,
                 }
 
-                console.log(tokenData);
+                // console.log(tokenData);
                 res.status(200).send(response);
             }
             else {
