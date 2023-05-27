@@ -29,7 +29,7 @@ const experience_controller = require("../controllers/experienceController");
 
 //Education routes
 experience_route.post('/addExperience', experience_controller.addExperience);
-experience_route.get('/getExperience', experience_controller.getExperience);
+experience_route.post('/getExperience', experience_controller.getExperience);
 experience_route.delete('/deleteExperience/:id', experience_controller.deleteExperience);
 experience_route.post('/editExperience', experience_controller.editExperience);
 experience_route.post('/uploadCompanyLogo', upload.single('companylogo'), experience_controller.uploadExperienceImage);

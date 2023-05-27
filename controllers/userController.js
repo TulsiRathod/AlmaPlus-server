@@ -303,8 +303,8 @@ const userProfileEdit = async (req, res) => {
         var skills = req.body.skills;
         var institute = req.body.institute;
         var role = req.body.role
-
-        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, city: city, state: state, nation: nation, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role, institute: institute } }, { new: true });
+        var about =req.body.about
+        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, city: city, state: state, nation: nation, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role, institute: institute ,about:about} }, { new: true });
 
         res.status(200).send({ success: true, msg: 'User Profile Updated', data: new_data });
     }
