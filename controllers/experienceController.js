@@ -46,7 +46,7 @@ const deleteExperience = async (req, res) => {
 const editExperience = async (req, res) => {
     try {
 
-        const experience_data = await Experience.findByIdAndUpdate({ _id: req.body.id }, { $set: req.body }, { new: true });
+        const experience_data = await Experience.findByIdAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true });
         res.status(200).send({ success: true, msg: 'experience Updated', data: experience_data });
 
     } catch (error) {

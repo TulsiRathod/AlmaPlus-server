@@ -94,10 +94,15 @@ io.on("connection", (socket) => {
 
     socket.on("sendNotification", ({ senderid, receiverid, type }) => {
         const user = getUser(receiverid);
-        io.to(user.socketId).emit("getNotification", {
+        
+        if (user && user.socketId) {
+          io.to(user.socketId).emit("getNotification", {
             senderid,
             type,
-        })
-    })
+          });
+        } else {
+          console.log("Invalid user or socketId not found.");
+        }
+      });
 })
 
