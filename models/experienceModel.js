@@ -6,8 +6,8 @@ const experience = new mongoose.Schema({
     userid: { type: String },
     companyname: { type: String },
     position: { type: String },
-    joindate: { type: Date },
-    enddate: { type: Date },
+    joindate: { type: String },
+    enddate: { type: String },
     companylogo: { type: String },
     description: { type: String }
 });

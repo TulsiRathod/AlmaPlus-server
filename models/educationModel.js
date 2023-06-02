@@ -10,11 +10,11 @@ const education = new mongoose.Schema({
     course: {
         type: String
     },
-    joinyear: {
-        type: Date
+    joindate: {
+        type: String
     },
-    endyear: {
-        type: Date
+    enddate: {
+        type: String
     },
     collagelogo: {
         type: String

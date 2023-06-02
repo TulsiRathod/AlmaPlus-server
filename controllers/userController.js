@@ -327,7 +327,7 @@ const deleteUser = async (req, res) => {
 const searchUser = async (req, res) => {
     try {
         var search = req.body.search;
-        var user_data = await User.find({ "fname": { $regex: ".*" + search + ".*" } });
+        var user_data = await User.find({ "fname": { $regex: new RegExp(".*" + search + ".*", "i") } });
         if (user_data.length > 0) {
             res.status(200).send({ success: true, msg: "User Details", data: user_data });
         }

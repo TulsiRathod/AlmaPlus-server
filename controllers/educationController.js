@@ -7,8 +7,8 @@ const addEducation = async (req, res) => {
             userid: req.body.userid,
             institutename: req.body.institutename,
             course: req.body.course,
-            joinyear: req.body.joinyear,
-            endyear: req.body.endyear,
+            joindate: req.body.joindate,
+            enddate: req.body.enddate,
             collagelogo: req.body.collagelogo
         });
         const education_data = await education.save();
@@ -47,11 +47,11 @@ const editEducation = async (req, res) => {
         var id = req.body.id;
         var institutename = req.body.institutename;
         var course = req.body.course;
-        var joinyear = req.body.joinyear;
-        var endyear = req.body.endyear;
+        var joindate = req.body.joindate;
+        var enddate = req.body.enddate;
         var collagelogo = req.body.collagelogo;
 
-        const education_data = await Education.findByIdAndUpdate({ _id: id }, { $set: { institutename: institutename, course: course, joinyear: joinyear, endyear: endyear, collagelogo: collagelogo } }, { new: true });
+        const education_data = await Education.findByIdAndUpdate({ _id: id }, { $set: { institutename: institutename, course: course, joindate: joindate, enddate: enddate, collagelogo: collagelogo } }, { new: true });
         res.status(200).send({ success: true, msg: 'education Updated', data: education_data });
 
     } catch (error) {
