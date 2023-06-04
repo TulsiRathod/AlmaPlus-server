@@ -37,7 +37,7 @@ user_route.post('/userUpdatePassword', user_controller.updatePassword);
 user_route.post('/userForgetPassword', user_controller.forgetPassword);
 user_route.post('/userResetPassword', user_controller.resetpassword);
 user_route.post('/userProfileEdit', user_controller.userProfileEdit);
-user_route.get('/searchUser', user_controller.searchUser);
+user_route.post('/searchUser', user_controller.searchUser);
 user_route.get('/searchUserById/:_id', user_controller.searchUserById);
 user_route.get('/userLogout', user_controller.userLogout);
 user_route.get('/getUsers', user_controller.getUsers);
