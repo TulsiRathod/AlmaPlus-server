@@ -303,8 +303,8 @@ const userProfileEdit = async (req, res) => {
         var skills = req.body.skills;
         var institute = req.body.institute;
         var role = req.body.role
-        var about =req.body.about
-        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, city: city, state: state, nation: nation, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role, institute: institute ,about:about} }, { new: true });
+        var about = req.body.about
+        const new_data = await User.findByIdAndUpdate({ _id: id }, { $set: { fname: fname, lname: lname, gender: gender, dob: dob, city: city, state: state, nation: nation, profilepic: profilepic, phone: phone, email: email, languages: languages, github: github, linkedin: linkedin, portfolioweb: portfolioweb, skills: skills, role: role, institute: institute, about: about } }, { new: true });
 
         res.status(200).send({ success: true, msg: 'User Profile Updated', data: new_data });
     }
@@ -372,12 +372,21 @@ const getUsers = async (req, res) => {
         res.status(400).send({ success: false, msg: error.message });
     }
 }
-
+//get newly registered users
+const getTopUsers = async (req, res) => {
+    try {
+        const user_data = await User.find({ institute: req.body.institute }).limit(3);
+        res.status(200).send({ success: true, data: user_data });
+    }
+    catch (error) {
+        res.status(400).send({ success: false, msg: error.message });
+    }
+}
 
 //get users of perticular institute
 const getUsersOfInstitute = async (req, res) => {
     try {
-        const user_data = await User.find({ institute: req.body.name });
+        const user_data = await User.find({ institute: req.body.institute });
         res.status(200).send({ success: true, data: user_data });
     }
     catch (error) {
@@ -417,7 +426,7 @@ const unfollowUser = async (req, res) => {
                 await currentUser.updateOne({ $pull: { followings: req.params.id } });
                 res.status(200).json("user has been unfollowed");
             } else {
-                res.status(403).json("you dont follow this user");
+                res.status(403).json("you dont unfollow this user");
             }
         } catch (err) {
             res.status(500).json(err);
@@ -442,5 +451,6 @@ module.exports = {
     unfollowUser,
     searchUserById,
     deleteUser,
-    getUsersOfInstitute
+    getUsersOfInstitute,
+    getTopUsers
 }
