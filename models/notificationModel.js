@@ -7,7 +7,7 @@ const notification = new mongoose.Schema({
     senderid: {
         type: String
     },
-    senderimage: {
+    image: {
         type: String
     },
     msg: {
@@ -16,6 +16,9 @@ const notification = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    title:{
+        type:String
     }
 });
 
