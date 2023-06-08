@@ -9,6 +9,10 @@ const message = new mongoose.Schema({
     },
     text: {
         type: String,
+    },
+    time:{
+        type: String,
+        default: new Date(),
     }
 });
 

@@ -92,20 +92,20 @@ io.on("connection", (socket) => {
         text,
       });
     } else {
-      console.log("Invalid user or socketId not found.");
+      // console.log("Invalid user or socketId not found.");
     }
   });
 
-  socket.on("sendNotification", ({ senderid, receiverid, type }) => {
+  socket.on("sendNotification", ({ receiverid, title, msg, type }) => {
     const user = getUser(receiverid);
 
     if (user && user.socketId) {
       io.to(user.socketId).emit("getNotification", {
-        senderid,
-        type,
+        title,
+        msg,
       });
     } else {
-      console.log("Invalid user or socketId not found.");
+      // console.log("Invalid user or socketId not found.");
     }
   });
 });

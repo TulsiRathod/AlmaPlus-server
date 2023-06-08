@@ -25,7 +25,20 @@ const getConversation = async (req, res) => {
     }
 }
 
+// Search Conversation
+const searchConversation = async (req, res) => {
+    try {
+        const conversation = await Conversation.find({
+            members: { $all: [req.body.person1 ,req.body.person2] }
+        });
+        res.status(200).send({ success: true, data: conversation });
+    } catch (error) {
+        res.status(500).send({ success: false, msg: error.message });
+    }
+}
+
 module.exports = {
     newConversation,
-    getConversation
+    getConversation,
+    searchConversation
 }
