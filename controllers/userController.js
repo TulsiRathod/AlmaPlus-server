@@ -386,7 +386,7 @@ const getTopUsers = async (req, res) => {
 //get users of perticular institute
 const getUsersOfInstitute = async (req, res) => {
     try {
-        const user_data = await User.find({ institute: req.body.institute });
+        const user_data = await User.find({ institute: req.params.institute });
         res.status(200).send({ success: true, data: user_data });
     }
     catch (error) {
