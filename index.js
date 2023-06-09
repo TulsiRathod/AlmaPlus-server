@@ -8,7 +8,7 @@ const port = 5000;
 const cors = require("cors");
 const io = require("socket.io")(8900, {
   cors: {
-    origin: "http://20.106.152.112:3000",
+    origin: "http://localhost:3000",
   },
 });
 connectToMongo();
@@ -84,12 +84,13 @@ io.on("connection", (socket) => {
     io.emit("getUsers", users);
   });
 
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+  socket.on("sendMessage", ({ senderId, receiverId, text, time }) => {
     const user = getUser(receiverId);
     if (user && user.socketId) {
       io.to(user.socketId).emit("getMessage", {
         senderId,
         text,
+        time,
       });
     } else {
       // console.log("Invalid user or socketId not found.");
