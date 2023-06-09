@@ -20,6 +20,10 @@ const event = new mongoose.Schema({
     },
     photos: {
         type: Array
+    },
+    participants: {
+        type: Array,
+        default: []
     }
 });
 

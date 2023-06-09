@@ -21,6 +21,7 @@ const user = new mongoose.Schema({
     nation: { type: String },
     profilepic: {
         type: String,
+        default: ""
     },
     phone: {
         type: String,

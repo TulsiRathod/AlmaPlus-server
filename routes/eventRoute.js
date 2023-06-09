@@ -59,6 +59,7 @@ event_route.delete('/deleteEvent/:id', event_controller.deleteEvent);
 event_route.post('/editEvent', uploadPic, event_controller.editEvent);
 event_route.get('/searchEvent', event_controller.searchEvent);
 event_route.get('/getUpcommingEvents', event_controller.getUpcommingEvents);
+event_route.put("/participateInEvent/:id", event_controller.participateInEvent);
 
 module.exports = event_route;
 

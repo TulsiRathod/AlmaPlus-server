@@ -109,6 +109,22 @@ const getUpcommingEvents = async (req, res) => {
     }
 }
 
+// participate in the event
+const participateInEvent = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        // res.status(200).json(req.params.id);
+        if (!event.participants.includes(req.body.userId)) {
+            await event.updateOne({ $push: { participants: req.body.userId } });
+            res.status(200).json("user has been participated in this event");
+        } else {
+            res.status(403).json("you has allready been participated in this event");
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
 module.exports = {
     addEvents,
     getEvents,
@@ -116,5 +132,6 @@ module.exports = {
     editEvent,
     searchEvent,
     getUpcommingEvents,
-    getEventsByInstitute
+    getEventsByInstitute,
+    participateInEvent
 }
