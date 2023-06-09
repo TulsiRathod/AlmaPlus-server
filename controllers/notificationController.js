@@ -22,9 +22,10 @@ const addNotification = async (req, res) => {
     try {
         const notification = new Notification({
             userid: req.body.userid,
-            senderid: req.body.senderid,
             msg: req.body.msg,
-            senderimage: req.body.senderimage
+            image: req.body.image,
+            title:req.body.title,
+            date:req.body.date,
         });
         const notification_data = await notification.save();
         res.status(200).send({ success: true, data: notification_data });

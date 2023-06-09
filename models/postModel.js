@@ -21,7 +21,7 @@ const post = new mongoose.Schema({
         type: String,
     },
     date: {
-        type: Date,
+        type: String,
         default: Date.now()
     },
     photos: {
@@ -31,10 +31,6 @@ const post = new mongoose.Schema({
         type: Array,
         default: []
     },
-    // comments: {
-    //     type: Array,
-    //     default: []
-    // }
 });
 
 
