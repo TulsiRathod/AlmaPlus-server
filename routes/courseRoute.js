@@ -18,7 +18,7 @@ course_route.post('/addCourse', course_controller.addCourse);
 course_route.get('/getCourse', course_controller.getCourse);
 course_route.delete('/deleteCourse/:id', course_controller.deleteCourse);
 course_route.post('/editCourse', course_controller.editCourse);
-course_route.get('/getCourseByInstitute', course_controller.getCourseByInstitute);
+course_route.get('/getCourseByInstitute/:instituteid', course_controller.getCourseByInstitute);
 
 module.exports = course_route;
 

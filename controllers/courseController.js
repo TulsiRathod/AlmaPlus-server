@@ -31,7 +31,7 @@ const getCourse = async (req, res) => {
 
 const getCourseByInstitute = async (req, res) => {
     try {
-        const course_data = await Course.find({ instituteid: req.body.instituteid });
+        const course_data = await Course.find({ instituteid: req.params.instituteid });
         res.status(200).send({ success: true, data: course_data });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });
