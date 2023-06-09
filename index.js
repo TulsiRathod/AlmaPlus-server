@@ -27,6 +27,7 @@ const education_route = require("./routes/educationRoute");
 const experience_route = require("./routes/experienceRoute");
 const company_route = require("./routes/companyRoute");
 const notification_route = require("./routes/notificationRoute");
+const financialaid_route = require("./routes/financialaidRoute");
 
 app.use(cors());
 app.use(cookieParser());
@@ -43,6 +44,7 @@ app.use("/api", experience_route);
 app.use("/api", feedback_route);
 app.use("/api", company_route);
 app.use("/api", notification_route);
+app.use("/api", financialaid_route);
 
 app.get("/", (req, res) => {
   res.end("Hellooo");
