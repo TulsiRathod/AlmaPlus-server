@@ -17,7 +17,7 @@ const addEvents = async (req, res) => {
 
     } catch (error) {
         res.status(400).send(error.message);
-        console.log("Error in Register User : " + error.message);
+        // console.log("Error in add event : " + error.message);
     }
 }
 

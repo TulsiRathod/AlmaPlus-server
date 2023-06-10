@@ -38,8 +38,8 @@ const uploadPic = (req, res, next) => {
         else {
             let Urls = [];
             for (i = 0; i < req.files.length; i++) {
-                Urls[i] = '/eventImages/' + req.files[i].filename;
-                // Urls[i] = `${req.protocol}://${req.get('host')}/public/eventImages/` + req.files[i].filename;
+                // Urls[i] = process.env.WEB_URL + "/public/eventImages" + req.files[i].filename;
+                Urls[i] = `/eventImages/` + req.files[i].filename;
             }
             req.images = Urls;
             next();
@@ -62,5 +62,3 @@ event_route.get('/getUpcommingEvents', event_controller.getUpcommingEvents);
 event_route.put("/participateInEvent/:id", event_controller.participateInEvent);
 
 module.exports = event_route;
-
-

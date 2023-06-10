@@ -29,7 +29,7 @@ const addPost = async (req, res) => {
 
     } catch (error) {
         res.status(400).send(error.message);
-        console.log("Error in add post : " + error.message);
+        // console.log("Error in add post : " + error.message);
     }
 }
 //Add post for institute

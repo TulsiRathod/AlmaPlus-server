@@ -5,6 +5,15 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 const cookieParser = require("cookie-parser");
+//for images
+const cloudinary = require("cloudinary").v2;
+//cloudinary configration
+cloudinary.config({
+    cloud_name: 'djzifhgu4',
+    api_key: '797676925462281',
+    api_secret: 'DFsq5RtsBk-fgNNiY7u61qZ5POE'
+});
+
 
 //method for send mail for reset password
 const sendresetpasswordMail = async (name, email, token) => {
@@ -122,11 +131,16 @@ const registerUser = async (req, res) => {
 
 const uploadUserImage = async (req, res) => {
     try {
-        if (req.file !== undefined) {
-            const picture = ({
-                url: '/userImages/' + req.file.filename,
-            });
-            res.status(200).send({ success: true, data: picture });
+        if (req.files !== undefined) {
+            const file = req.files.profilepic;
+            cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+                console.log(result);
+                const picture = ({
+                    url: result.url,
+                });
+                res.status(200).send({ success: true, data: picture });
+            }
+            );
         }
         else {
             res.status(400).send({ success: false, msg: "plz select a file" });
@@ -329,10 +343,10 @@ const searchUser = async (req, res) => {
         var search = req.body.search;
         var user_data = await User.find({
             $or: [
-              { "fname": { $regex: new RegExp(".*" + search + ".*", "i") } },
-              { "lname": { $regex: new RegExp(".*" + search + ".*", "i") } }
+                { "fname": { $regex: new RegExp(".*" + search + ".*", "i") } },
+                { "lname": { $regex: new RegExp(".*" + search + ".*", "i") } }
             ]
-          });;
+        });;
         if (user_data.length > 0) {
             res.status(200).send({ success: true, msg: "User Details", data: user_data });
         }
