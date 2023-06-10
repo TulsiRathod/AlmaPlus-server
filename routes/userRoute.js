@@ -54,4 +54,3 @@ user_route.delete("/deleteUser/:id", user_controller.deleteUser);
 
 module.exports = user_route;
 
-
