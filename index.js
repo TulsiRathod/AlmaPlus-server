@@ -6,11 +6,11 @@ const connectToMongo = require("./db/conn");
 const cookieParser = require("cookie-parser");
 const port = 5000;
 const cors = require("cors");
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+// const io = require("socket.io")(8900, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
 connectToMongo();
 
 //routes
@@ -57,58 +57,58 @@ app.listen(port, function () {
 });
 
 //socket server--------------------
-let users = [];
+// let users = [];
 
-const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
-};
+// const addUser = (userId, socketId) => {
+//   !users.some((user) => user.userId === userId) &&
+//     users.push({ userId, socketId });
+// };
 
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
+// const removeUser = (socketId) => {
+//   users = users.filter((user) => user.socketId !== socketId);
+// };
 
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
-};
+// const getUser = (userId) => {
+//   return users.find((user) => user.userId === userId);
+// };
 
-io.on("connection", (socket) => {
-  // console.log("a user connected!");
+// io.on("connection", (socket) => {
+//   // console.log("a user connected!");
 
-  socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
-    io.emit("getUsers", users);
-  });
+//   socket.on("addUser", (userId) => {
+//     addUser(userId, socket.id);
+//     io.emit("getUsers", users);
+//   });
 
-  socket.on("disconnect", () => {
-    // console.log("user disconnected");
-    removeUser(socket.id);
-    io.emit("getUsers", users);
-  });
+//   socket.on("disconnect", () => {
+//     // console.log("user disconnected");
+//     removeUser(socket.id);
+//     io.emit("getUsers", users);
+//   });
 
-  socket.on("sendMessage", ({ senderId, receiverId, text, time }) => {
-    const user = getUser(receiverId);
-    if (user && user.socketId) {
-      io.to(user.socketId).emit("getMessage", {
-        senderId,
-        text,
-        time,
-      });
-    } else {
-      // console.log("Invalid user or socketId not found.");
-    }
-  });
+//   socket.on("sendMessage", ({ senderId, receiverId, text, time }) => {
+//     const user = getUser(receiverId);
+//     if (user && user.socketId) {
+//       io.to(user.socketId).emit("getMessage", {
+//         senderId,
+//         text,
+//         time,
+//       });
+//     } else {
+//       // console.log("Invalid user or socketId not found.");
+//     }
+//   });
 
-  socket.on("sendNotification", ({ receiverid, title, msg, type }) => {
-    const user = getUser(receiverid);
+//   socket.on("sendNotification", ({ receiverid, title, msg, type }) => {
+//     const user = getUser(receiverid);
 
-    if (user && user.socketId) {
-      io.to(user.socketId).emit("getNotification", {
-        title,
-        msg,
-      });
-    } else {
-      // console.log("Invalid user or socketId not found.");
-    }
-  });
-});
+//     if (user && user.socketId) {
+//       io.to(user.socketId).emit("getNotification", {
+//         title,
+//         msg,
+//       });
+//     } else {
+//       // console.log("Invalid user or socketId not found.");
+//     }
+//   });
+// });
