@@ -380,7 +380,7 @@ const getUsers = async (req, res) => {
 //get newly registered users
 const getTopUsers = async (req, res) => {
     try {
-        const user_data = await User.find({ institute: req.body.institute }).limit(3);
+        const user_data = await User.find({ institute: req.body.institute }).limit(5);
         res.status(200).send({ success: true, data: user_data });
     }
     catch (error) {

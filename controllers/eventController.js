@@ -116,9 +116,9 @@ const participateInEvent = async (req, res) => {
         // res.status(200).json(req.params.id);
         if (!event.participants.includes(req.body.userId)) {
             await event.updateOne({ $push: { participants: req.body.userId } });
-            res.status(200).json("user has been participated in this event");
+            res.status(200).json("Participated in this event Successfully");
         } else {
-            res.status(403).json("you has allready been participated in this event");
+            res.status(403).json("You have been already participated in this event");
         }
     } catch (err) {
         res.status(500).json(err);
