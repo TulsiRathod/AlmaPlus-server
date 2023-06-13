@@ -54,7 +54,7 @@ const event_controller = require("../controllers/eventController");
 //event routes
 event_route.post('/addEvent', uploadPic, event_controller.addEvents);
 event_route.get('/getEvents', event_controller.getEvents);
-event_route.get('/getEventsByInstitute', event_controller.getEventsByInstitute);
+event_route.get('/getEventsByInstitute/:organizerid', event_controller.getEventsByInstitute);
 event_route.delete('/deleteEvent/:id', event_controller.deleteEvent);
 event_route.post('/editEvent', uploadPic, event_controller.editEvent);
 event_route.get('/searchEvent', event_controller.searchEvent);

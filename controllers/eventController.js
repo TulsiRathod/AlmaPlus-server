@@ -34,7 +34,7 @@ const getEvents = async (req, res) => {
 //view Events by institute
 const getEventsByInstitute = async (req, res) => {
     try {
-        const evet_data = await Event.find({ organizerid: req.body.organizerid });
+        const evet_data = await Event.find({ organizerid: req.params.organizerid });
         res.status(200).send({ success: true, data: evet_data });
     } catch (error) {
         res.status(400).send({ success: false, msg: error.message });

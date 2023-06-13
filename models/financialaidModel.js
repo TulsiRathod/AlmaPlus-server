@@ -1,21 +1,27 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-const financialaid= new mongoose.Schema({
-    name:{
-        type:String,
-    },
-    image:{
+const financialaid = new mongoose.Schema({
+    institutename: {
         type: String,
     },
-    aid:{
+    name: {
         type: String,
     },
-    claimed:{
+    image: {
         type: String,
     },
-    description:{
-        type:String,
+    aid: {
+        type: String,
+    },
+    claimed: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
+    dueDate: {
+        type: Date
     }
 });
 
-module.exports= mongoose.model("FinancialAidTB", financialaid);
+module.exports = mongoose.model("FinancialAidTB", financialaid);
