@@ -75,7 +75,7 @@ const sendInvitationMail = async (name, email, tempPass) => {
             from: config.emailUser,
             to: email,
             subject: 'You are invited to connect AlmaPlus+',
-            html: '<p>Hello ' + name + ', You are invited to connect with AlmaPlus Your Password is : ' + tempPass + '</p><p>Please Click on a link to <a href="https://alma-plus-main.vercel.app/login">Login</a> to your Account</p>'
+            html: '<p>Hello ' + name + ', You are invited to connect with AlmaPlus Your Password is : ' + tempPass + '</p><p>Please Click on a link to <a href="https://localhost:3000/login">Login</a> to your Account</p>'
         }
         transporter.sendMail(mailoptions, function (error, info) {
             if (error) {
