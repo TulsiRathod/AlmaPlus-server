@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("sendNotification", ({ receiverid, title, msg, type }) => {
+  socket.on("sendNotification", ({ receiverid, title, msg}) => {
     const user = getUser(receiverid);
 
     if (user && user.socketId) {
